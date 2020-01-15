@@ -1,0 +1,1 @@
+export {default as CubePiece} from './cube-piece';

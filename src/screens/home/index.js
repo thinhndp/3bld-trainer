@@ -51,6 +51,21 @@ const HomeScreen = ({ navigation }) => {
           <CubePiece type='edge' letter='H' subPosition='right' stickerSize={50}></CubePiece>
         </NavCard>
       </TouchableHighlight>
+      <TouchableHighlight
+        style={styles.navCardContainer}
+      >
+        <NavCard title={'Corner'.toUpperCase()} desc={'Letter to Colors'}>
+          <Text style={styles.bigText}>A</Text>
+        </NavCard>
+      </TouchableHighlight>
+      <TouchableHighlight
+        style={styles.navCardContainer}
+      >
+        <NavCard title={'Corner'.toUpperCase()} desc={'Colors to Letter'}>
+          {/* <CubeSticker color={'red'} type={'main'} size={120}></CubeSticker> */}
+          <CubePiece type='corner' letter='T' subPosition='left' stickerSize={50}></CubePiece>
+        </NavCard>
+      </TouchableHighlight>
       {/* <CubePiece></CubePiece> */}
     </View>
   );

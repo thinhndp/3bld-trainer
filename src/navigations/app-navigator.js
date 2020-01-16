@@ -1,3 +1,5 @@
+import React from 'react';
+import { View } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 
 import HomeScreen from '_screens/home';
@@ -22,6 +24,29 @@ const RouteConfigs = {
   },
 };
 
-const AppNavigator = createStackNavigator(RouteConfigs, AppNavigatorConfig);
+// const AppNavigator = createStackNavigator(RouteConfigs, AppNavigatorConfig);
+const AppNavigator = createStackNavigator(
+  {
+    Home: HomeScreen,
+    EdgeCTL: EdgeCTLScreen,
+    EdgeLTC: EdgeLTCScreen,
+  },
+  {
+    initialRouteName: 'Home',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#171717',
+
+      },
+      headerTintColor: '#fff',
+      headerTitleAlign: 'center',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        fontSize: 22,
+        alignSelf: 'center'
+      },
+    },
+  }
+);
 
 export default AppNavigator;

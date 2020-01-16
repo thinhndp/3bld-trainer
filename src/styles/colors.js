@@ -5,8 +5,8 @@ export const BLACK = '#000000';
 export const BACKGROUND = '#262626';
 
 // ACTIONS
-export const SUCCESS = '#3adb76';
-export const WARNING = '#ffae00';
+export const SUCCESS = '#559300';
+export const WARNING = '#EE4540';
 export const ALERT = '#cc4b37';
 
 // GRAYSCALE

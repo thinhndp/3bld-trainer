@@ -56,6 +56,14 @@ const CORNER_LETTER_TO_PIECE_DICT = {
   'X': { mainColor: 'yellow', subColor1: 'blue', subColor2: 'orange' },
 }
 
+const NOTATIONS = [
+  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X'
+];
+
+const DIRECTIONS = [
+  'top', 'right', 'bottom', 'left'
+];
+
 const defaultStyles = StyleSheet.create({
   piece: {
     // display: 'flex',
@@ -90,8 +98,9 @@ const CubePiece = ({ type, letter, subPosition, stickerSize }) => {
     stickerSize: number
   */
 
-  const _renderCornerPiece = (letter, subPosition, stickerSize) => {
-    const pos = subPosition in [ 'top', 'right', 'bottom', 'left' ] ? subPosition : [ 'top', 'right', 'bottom', 'left' ][Math.floor(Math.random() * 4)];
+  const _renderCornerPiece = (userLetter, subPosition, stickerSize) => {
+    const letter = NOTATIONS.includes(userLetter) ? userLetter : NOTATIONS[Math.floor(Math.random() * 23)];
+    const pos = DIRECTIONS.includes(subPosition) ? subPosition : DIRECTIONS[Math.floor(Math.random() * 4)];
     const size = stickerSize ? stickerSize : 50;
 
     if (pos === 'top') {
@@ -208,8 +217,9 @@ const CubePiece = ({ type, letter, subPosition, stickerSize }) => {
     }
   }
 
-  const _renderEdgePiece = (letter, subPosition, stickerSize) => {
-    const pos = subPosition in [ 'top', 'right', 'bottom', 'left' ] ? subPosition : [ 'top', 'right', 'bottom', 'left' ][Math.floor(Math.random() * 4)];
+  const _renderEdgePiece = (userLetter, subPosition, stickerSize) => {
+    const letter = NOTATIONS.includes(userLetter) ? userLetter : NOTATIONS[Math.floor(Math.random() * 23)];
+    const pos = DIRECTIONS.includes(subPosition) ? subPosition : DIRECTIONS[Math.floor(Math.random() * 4)];
     const size = stickerSize ? stickerSize : 50;
     if (pos === 'top') {
       return (
@@ -291,8 +301,8 @@ const CubePiece = ({ type, letter, subPosition, stickerSize }) => {
 
   return (
     type === 'edge'
-    ? _renderEdgePiece(letter.toUpperCase(), subPosition, stickerSize)
-    : _renderCornerPiece(letter.toUpperCase(), subPosition, stickerSize)
+    ? _renderEdgePiece(letter, subPosition, stickerSize)
+    : _renderCornerPiece(letter, subPosition, stickerSize)
   );
 }
 

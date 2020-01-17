@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { CubeSticker } from '../atoms';
+import { padding } from '_styles';
 
 const COLORS = [['orange'], ['white', 'green', 'yellow'], ['red'], ['blue']];
 const INACTIVE_OPACITY = 0.4;
@@ -18,12 +19,31 @@ const defaultStyles = StyleSheet.create({
   },
   justifyCenter: {
     justifyContent: 'center'
+  },
+  stickerContainer: {
+    position: 'relative',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  overlay: {
+    position: 'absolute',
   }
 });
 
-const CubeFlat = ({ type, width, status, onStickerPress }) => {
+const CubeFlat = ({ type, width, status, onStickerPress, stickersStyle, stickersOverlay }) => {
+  /*
+    type: 'full' | 'center-only', not yet implemented
+    width: number, component width
+    status: 'active' | 'inactive', stickers opacities change accordingly
+    onStickerPress: func, parent function to call
+    stickersStyle: Obj(stickers: Arr, style: StyleObj), style for stickers with color in Arr
+    stickersOverlay: Obj(stickers: Arr, overlay: Component), overlay component for stickers with color in Arr
+  */
   const _stickerSize = (2 / 9) * width;
   const _status = status ? status : 'active';
+  const _stickersStyle = stickersStyle ? stickersStyle : {stickers: [], style: null};
+  const _stickersOverlay = stickersOverlay ? stickersOverlay : {stickers: [], overlay: null};
   const [_chosenStickers, _setChosenStickers] = useState([]);
   const [_stickers, _setStickers] = useState(
     COLORS.map(stickerCol => (stickerCol.map(sticker => ({ 
@@ -36,43 +56,43 @@ const CubeFlat = ({ type, width, status, onStickerPress }) => {
   //   status: _status,
   //  }))));
 
-  useEffect(() => {
-    const newStickers = _stickers.map(stickerCol => (stickerCol.map(sticker => (
-      _chosenStickers.includes(sticker.color)
-      ? { ...sticker, status: 'active' }
-      :  { ...sticker, status: 'inactive' }
-    ))));
-    _setStickers([...newStickers]);
-  }, [_chosenStickers]);
+  // useEffect(() => {
+  //   const newStickers = _stickers.map(stickerCol => (stickerCol.map(sticker => (
+  //     _chosenStickers.includes(sticker.color)
+  //     ? { ...sticker, status: 'active' }
+  //     :  { ...sticker, status: 'inactive' }
+  //   ))));
+  //   _setStickers([...newStickers]);
+  // }, [_chosenStickers]);
+
+
 
   const _handleStickerTap = (color) => {
-    // const newStickers = _stickers;
     // var newChosenStickers = _chosenStickers;
-    // const curStickerStatus = newStickers[yIndex][xIndex].status;
-    // if (curStickerStatus === 'active') {
-    //   newStickers[yIndex][xIndex].status = 'inactive';
-    //   newChosenStickers = [ ...newChosenStickers.filter(chosen => chosen !== newStickers[yIndex][xIndex].color) ];
+    // const index = _chosenStickers.indexOf(color);
+    // if (index > -1) {
+    //   newChosenStickers.splice(index, 1);
     // }
     // else {
-    //   newStickers[yIndex][xIndex].status = 'active';
-    //   newChosenStickers.push(newStickers[yIndex][xIndex].color);
+    //   newChosenStickers.push(color);
     // }
-    // // console.log(chosenStickers);
-    // // newStickers[yIndex][xIndex].status = curStickerStatus === 'active' ? 'inactive' : 'active';
     // _setChosenStickers([...newChosenStickers]);
-    // _setStickers([...newStickers]);
     // onStickerPress(_chosenStickers);
+    onStickerPress(color);
+  }
 
-    var newChosenStickers = _chosenStickers;
-    const index = _chosenStickers.indexOf(color);
-    if (index > -1) {
-      newChosenStickers.splice(index, 1);
+  const _getStickerStyle = (sticker) => {
+    if (_stickersStyle.stickers.includes(sticker.color)) {
+      return {
+        margin: (_stickerSize / 8),
+        opacity: sticker.status === 'active' ? 1 : INACTIVE_OPACITY,
+        ..._stickersStyle.style
+      };
     }
-    else {
-      newChosenStickers.push(color);
-    }
-    _setChosenStickers([...newChosenStickers]);
-    onStickerPress(_chosenStickers);
+    return {
+      margin: (_stickerSize / 8),
+      opacity: sticker.status === 'active' ? 1 : INACTIVE_OPACITY,
+    };
   }
 
   return (
@@ -84,15 +104,27 @@ const CubeFlat = ({ type, width, status, onStickerPress }) => {
               key={'s' + xIndex.toString()}
               onPress={() => {_handleStickerTap(sticker.color)}}
               activeOpacity={1}
+              style={defaultStyles.stickerContainer}
             >
               <CubeSticker
                 color={sticker.color}
                 size={_stickerSize}
-                style={{
-                  margin: (_stickerSize / 8),
-                  opacity: sticker.status === 'active' ? 1 : INACTIVE_OPACITY
-                }}
-              />
+                style={_getStickerStyle(sticker)}
+              >
+              </CubeSticker>
+              {
+                _stickersOverlay.stickers.includes(sticker.color)
+                ? (
+                  <View
+                    style={{
+                      ...defaultStyles.overlay,
+                      width: _stickerSize,
+                      height: _stickerSize,
+                    }}
+                  >{_stickersOverlay.overlay}</View>
+                )
+                : null
+              }
             </TouchableOpacity>
           ))}
         </View>

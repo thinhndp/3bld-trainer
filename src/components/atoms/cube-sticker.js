@@ -9,7 +9,7 @@ const defaultStyles = StyleSheet.create({
   }
 });
 
-const CubeSticker = ({ color, type, rotation, style, size }) => {
+const CubeSticker = ({ color, type, rotation, style, size, children }) => {
   /*
     color: 'red' | 'green' | 'blue' | 'orange' | 'white'
     type: 'main' | 'sub'
@@ -64,7 +64,8 @@ const CubeSticker = ({ color, type, rotation, style, size }) => {
       backgroundColor: _getColor(color),
       borderRadius: size * 0.1,
       ...style
-    }}></View>
+    }}>
+    </View>
   );
 }
 

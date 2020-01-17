@@ -50,6 +50,7 @@ const HomeScreen = ({ navigation }) => {
         </TouchableHighlight>
         <TouchableHighlight
           style={styles.navCardContainer}
+          onPress={() => navigation.navigate('CornerLTC')}
         >
           <NavCard title={'Corner'.toUpperCase()} desc={'Letter to Colors'}>
             <Text style={styles.bigText}>A</Text>

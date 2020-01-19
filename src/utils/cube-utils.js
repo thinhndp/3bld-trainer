@@ -52,4 +52,12 @@ const cornerLetterToPiece = {
   'X': { mainColor: 'yellow', subColor1: 'blue', subColor2: 'orange' },
 }
 
-export default { edgeLetterToPiece, cornerLetterToPiece };
+const notations = [
+  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X'
+];
+
+const directions = [
+  'top', 'right', 'bottom', 'left'
+];
+
+export default { edgeLetterToPiece, cornerLetterToPiece, notations, directions };

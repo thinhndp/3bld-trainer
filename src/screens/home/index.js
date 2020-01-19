@@ -58,6 +58,7 @@ const HomeScreen = ({ navigation }) => {
         </TouchableHighlight>
         <TouchableHighlight
           style={styles.navCardContainer}
+          onPress={() => navigation.navigate('CornerCTL')}
         >
           <NavCard title={'Corner'.toUpperCase()} desc={'Colors to Letter'}>
             {/* <CubeSticker color={'red'} type={'main'} size={120}></CubeSticker> */}

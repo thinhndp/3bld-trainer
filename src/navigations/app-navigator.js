@@ -5,7 +5,8 @@ import { createStackNavigator } from 'react-navigation-stack';
 import HomeScreen from '_screens/home';
 import EdgeCTLScreen from '_screens/edge-ctl';
 import EdgeLTCScreen from '../screens/edge-ltc';
-import CornerLTCScreen from '../screens/corner-ltc'; 
+import CornerLTCScreen from '../screens/corner-ltc';
+import CornerCTLScreen from '../screens/corner-ctl';
 
 // const AppNavigatorConfig = {
 //   initialRouteName: 'Home',
@@ -32,6 +33,7 @@ const AppNavigator = createStackNavigator(
     EdgeCTL: EdgeCTLScreen,
     EdgeLTC: EdgeLTCScreen,
     CornerLTC: CornerLTCScreen,
+    CornerCTL: CornerCTLScreen
   },
   {
     initialRouteName: 'Home',

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { TouchableOpacity, TouchableHighlight, TouchableNativeFeedback } from 'react-native';
+import { TouchableOpacity, TouchableHighlight, TouchableNativeFeedback, TextInput } from 'react-native';
 
 import { Colors, Spacing, Typography } from '../../styles';
 import { Key, CubeSticker } from '../../components/atoms';
@@ -35,6 +35,15 @@ const styles = StyleSheet.create({
     color: Colors.WHITE,
     fontSize: Typography.FONT_SIZE_20,
     fontFamily: Typography.FONT_FAMILY_BOLD
+  },
+  inputTextField: {
+    margin: 6,
+    borderRadius: 10,
+    borderColor: '#fff',
+    // height: 40,
+    borderWidth: 3,
+    textAlign: 'center',
+    textAlignVertical: 'center'
   },
   letterAndCube: {
     display: 'flex',
@@ -124,6 +133,8 @@ const CornerCTLScreen = () => {
   const [feedback, setFeedback] = useState('none');
   const [screenState, setScreenState] = useState('ready');
   const [subStickerPostition, setSubStickerPosition] = useState('');
+  const [fromLetter, setFromLetter] = useState('A');
+  const [toLetter, setToLetter] = useState('X')
   const windowWidth = Dimensions.get('window').width;
 
   // useEffect(() => {
@@ -196,9 +207,19 @@ const CornerCTLScreen = () => {
   }
 
   const pickNextPiece = () => {
-    console.log(Helper.randomKey(CubeUtils.cornerLetterToPiece));
+    // console.log(Helper.randomKey(CubeUtils.cornerLetterToPiece));
+    // console.log('a');
+    var displayRange = [];
+    if (CubeUtils.notations.includes(fromLetter) && CubeUtils.notations.includes(fromLetter) && (fromLetter < toLetter)) {
+      // console.log(Helper.getNotationsWithRange(fromLetter, toLetter));
+      displayRange = [ ...Helper.getNotationsWithRange(fromLetter, toLetter) ];
+    }
+    else {
+      displayRange = CubeUtils.notations;
+    }
     // setPieceToGuess('A');
-    setPieceToGuess(Helper.randomKey(CubeUtils.cornerLetterToPiece));
+    // setPieceToGuess(Helper.randomKey(CubeUtils.cornerLetterToPiece));
+    setPieceToGuess(displayRange[Math.floor(Math.random() * displayRange.length)]);
     // setSubStickerPosition(['top', 'right', 'bottom', 'left'].[Math.floor(Math.random() * 4)])
     setSubStickerPosition(CubeUtils.directions[Math.floor(Math.random() * 4)])
     setChosenLetters([]);
@@ -275,6 +296,18 @@ const CornerCTLScreen = () => {
           <View style={styles.questionSection}>
             <View style={styles.timerSection}>
               {/* <Text style={styles.text}>Timer not implemented</Text> */}
+              <View style={{ display: 'flex', flexDirection: 'row' }}>
+                <TextInput
+                  style={{ ...styles.text, ...styles.inputTextField }}
+                  onChangeText={text => setFromLetter(text)}
+                  value={fromLetter}
+                />
+                <TextInput
+                  style={{ ...styles.text, ...styles.inputTextField }}
+                  onChangeText={text => setToLetter(text)}
+                  value={toLetter}
+                />
+              </View>
             </View>
             <View style={styles.bigTextSection}>
               {/* <Text style={{ ...styles.text, ...styles.bigText }}>{pieceToGuess}</Text> */}

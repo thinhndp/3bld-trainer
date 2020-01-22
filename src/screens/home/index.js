@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
   },
   bigText: {
     fontSize: 68,
-    color: Colors.BLACK
+    color: Colors.BLACK,
+    fontFamily: Typography.FONT_FAMILY_BOLD
   }
 });
 
